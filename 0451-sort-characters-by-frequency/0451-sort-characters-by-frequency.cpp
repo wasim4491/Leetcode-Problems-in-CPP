@@ -17,12 +17,7 @@ public:
             }
         }
         vector<Node> v3;
-        
-        vector<char> v1;
-        vector<int> v2;
         for(auto i : mp){
-            v1.push_back(i.first);
-            v2.push_back(i.second);
             Node* obj = new Node();
             obj->pk = i.first;
             obj->count = i.second;
@@ -30,23 +25,9 @@ public:
         }
         
         sort(v3.begin(),v3.end(), [ ]( const Node& lhs, const Node& rhs )
-{
-   return lhs.count > rhs.count;
-} );
-       /* int k = v2.size();
-        for(int i=0;i<k;i++){
-            for(int j=i;j<k;j++){
-                if(v2[i] < v2[j]){
-                    swap(v1[i], v1[j]);
-                    swap(v2[i], v2[j]);
-                }
-            }
-        }
-        for(int i=0;i<v2.size();i++){
-            cout << v1[i] << " " << v2[i] <<endl;
-        }
-        cout << endl;
-        */
+                {
+                   return lhs.count > rhs.count;
+                });
         int k = v3.size();
         string res = "";
         for(int i=0;i<k;i++){
