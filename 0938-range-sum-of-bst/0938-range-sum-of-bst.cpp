@@ -15,9 +15,6 @@ public:
         if(root == NULL){
             return count;
         }
-        else if(root->left == NULL && root -> right == NULL && root->val >= low && root->val <=high){
-            count +=root->val;
-        }
         else if(root->val >= low && root->val <=high){
         count = root->val + sumnodes(root->left,low,high,count) + sumnodes(root->right,low,high,count);
         }
