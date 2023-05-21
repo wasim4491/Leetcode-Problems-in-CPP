@@ -1,46 +1,33 @@
 class Solution {
 public:
+    void dfs(vector<vector<char>>& grid, int i, int j){
+        int m = grid.size();
+        int n = grid[0].size();
+        
+        grid[i][j] = '0';
+        
+        if(i-1 >=0 && grid[i-1][j] == '1'){
+            dfs(grid, i-1, j);
+        }
+        if(i+1 < m && grid[i+1][j] == '1'){
+            dfs(grid, i+1, j);
+        }
+        if(j-1 >= 0 && grid[i][j-1] == '1'){
+            dfs(grid, i, j-1);
+        }
+        if(j+1 < n && grid[i][j+1] == '1'){
+            dfs(grid, i, j+1);
+        }
+    }
     int numIslands(vector<vector<char>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
         int count = 0;
-        for(int i=0;i<grid.size();i++){
-            for(int j=0;j<grid[i].size();j++){
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
                 if(grid[i][j] == '1'){
-                    queue<pair<int,int>> que;
                     count++;
-                    grid[i][j] = '2';
-                    que.push({i,j});
-                    while(!que.empty()){
-                       // cout << "hi - " << grid[1][1] << endl;
-                        pair<int,int> ans= que.front();
-                        que.pop();
-                      //  cout << ans.first << ans.second << endl;
-                        if(ans.first-1 >= 0 && ans.second >= 0 && 
-                           ans.first-1 < grid.size() && ans.second<grid[0].size() && 
-                           grid[ans.first-1][ans.second] == '1'){
-                       //     cout << ans.first-1 << " - " << ans.second << "-->" << grid[ans.first-1][ans.second] << endl;
-                            grid[ans.first-1][ans.second] = '2';
-                            que.push({ans.first-1,ans.second});
-                        }
-                        if(ans.first>=0 && ans.second-1>=0 && 
-                                ans.first<grid.size() && ans.second-1<grid[0].size() && 
-                                grid[ans.first][ans.second-1] == '1'){
-                            grid[ans.first][ans.second-1] = '2';
-                            que.push({ans.first,ans.second-1});
-                        }
-                        if(ans.first+1>=0 && ans.second>=0 && 
-                                ans.first+1<grid.size() && ans.second<grid[0].size() && 
-                                grid[ans.first+1][ans.second] == '1'){
-                            grid[ans.first+1][ans.second] = '2';
-                            que.push({ans.first+1,ans.second});
-                        }
-                        if(ans.first>=0 && ans.second+1>=0 && 
-                                ans.first<grid.size() && ans.second+1<grid[0].size() && 
-                                grid[ans.first][ans.second+1] == '1'){
-                            grid[ans.first][ans.second + 1] = '2';
-                            que.push({ans.first,ans.second+1});
-                        }
-                        
-                    }
+                    dfs(grid, i, j);
                 }
             }
         }
