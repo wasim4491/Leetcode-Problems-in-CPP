@@ -21,31 +21,33 @@ public:
 
 class Solution {
 public:
-    Node* dfs(Node* node, unordered_map<Node*,Node*> &mp){
-        vector<Node*> nbrs;
-        Node* clone = new Node(node->val);
-        mp[node] = clone;
-        
-        for(auto i : node->neighbors){
-            if(mp.find(i) != mp.end()){
-                nbrs.push_back(mp[i]);
+    Node* dfs(Node* node, unordered_map<Node*, Node*> &mp){
+       Node* newnode = new Node(node->val);
+        vector<Node*> nodenbrs;
+        mp[node] = newnode;
+        for(auto it : node->neighbors){
+            if(mp.find(it) != mp.end()){
+                nodenbrs.push_back(mp[it]);
             }
             else{
-                nbrs.push_back(dfs(i,mp));
+                nodenbrs.push_back(dfs(it,mp));
             }
         }
-        clone->neighbors = nbrs;
-        return clone;
+        newnode->neighbors = nodenbrs;
+        return newnode;
     }
     Node* cloneGraph(Node* node) {
         if(node == NULL){
             return NULL;
         }
-        if(node -> neighbors.size() == 0){
-            Node* clone = new Node(node->val);
-            return clone;
+        if(node->neighbors.size() == 0){
+            Node *newnode = new Node(node->val);
+            return newnode;
         }
+       // Node* newnode = new Node(node->val);
+        int n = node->neighbors.size();
+       // vector<bool> visited(n+1, false);
         unordered_map<Node*, Node*> mp;
-        return dfs(node,mp);
+        return dfs(node, mp);
     }
 };
