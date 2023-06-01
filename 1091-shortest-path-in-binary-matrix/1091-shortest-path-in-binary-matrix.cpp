@@ -21,12 +21,7 @@ public:
         }
         vector<vector<bool>> visited(n, vector<bool> (n, false));
         vector<vector<pair<int, int>>> parent(n, vector<pair<int, int>>(n, {-1, -1}));
-        // vector<vector<pair<int,int>>> parent;
-        // for(int i=0;i<n;i++){
-        //     for(int j=0;j<n;j++){
-        //         parent[i][j] = {-1,-1};
-        //     }
-        // }
+       
         queue<pair<int,int>> q;
         q.push({0,0});
         visited[0][0] = true;
@@ -79,33 +74,18 @@ public:
                 parent[i-1][j+1] = {i,j};
             }
         }
-//         for(int i=0;i<n;i++){
-//             for(int j=0;j<n;j++){
-                
-//             }
-//         }
         int i = parent[n-1][n-1].first, j = parent[n-1][n-1].second;
         if(i == -1 && j == -1){
             return -1;
         }
         int count = 1;
         int l, m;
-       // for(int i=0;i<n;i++){
-       //      for(int j=0;j<n;j++){
-       //         cout << parent[i][j].first << " " << parent[i][j].second << endl;
-       //      }
-       //  }
         while(i != 0 || j != 0){
             l = parent[i][j].first;
             m = parent[i][j].second;
             count++;
             i = l;
             j = m;
-           // cout << i << " " << j << endl;
-            //cout << parent[i][j].first << " " << parent[i][j].second << endl;
-            // if(i == -1 || j == -1){
-            //     return -1;
-            // }
         }
         return count+1;
     }
