@@ -11,7 +11,7 @@ public:
             if(temp == ""){
                 temp = to_string(nums[i]);
             }
-            if((long)nums[i+1] - (long)nums[i] != 1){
+            if(nums[i+1]  != 1 + nums[i]){
                 if(temp != to_string(nums[i])){
                     temp = temp + "->" + to_string(nums[i]);
                 }
