@@ -1,23 +1,30 @@
 class Solution {
 public:
     
-    int money(vector<int> &nums, int n, vector<int> &dp){
-        dp[0] = nums[0];
+    int money(vector<int> &nums, int n){
+        int prev1 = nums[0];
+        int prev2 = 0, cur;
         int pick, notpick;
         for(int i=1; i<n; i++){
             pick = nums[i];
-            notpick = dp[i-1];
+            notpick = prev1;
             if(i > 1){
-                pick += dp[i-2];
+                pick += prev2;
             }
-            dp[i] = max(pick, notpick);
+            cur = max(pick, notpick);
+            prev2 = prev1;
+            prev1 = cur;
         }
-        return dp[n-1];
+        return cur;
     }
     
     int rob(vector<int>& nums) {
         int n = nums.size();
-        vector<int> dp(n);
-        return money(nums,n, dp);
+        
+        if(n == 1){
+            return nums[0];
+        }
+        
+        return money(nums,n);
     }
 };
