@@ -1,17 +1,19 @@
 class Solution {
 public:
-    int ans(int n, vector<int>& dp){
-        if(n <= 1){
-            return 1;
+    
+    int ways(int n){
+        int prev1 = 1;
+        int prev2 = 1;
+        int cur = 1;
+        for(int i=2; i<=n; i++){
+            cur = prev1 + prev2;
+            prev1 = prev2;
+            prev2 = cur;
         }
-        if(dp[n] != -1){
-            return dp[n];
-        }
-        dp[n] = ans(n-1, dp) + ans(n-2, dp) ;
-        return dp[n];
+        return cur;
     }
+    
     int climbStairs(int n) {
-        vector<int> dp(n+1, -1);
-        return ans(n,dp);
+        return ways(n);
     }
 };
