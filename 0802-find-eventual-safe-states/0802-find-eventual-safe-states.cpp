@@ -1,12 +1,11 @@
 class Solution {
 public:
-    bool dfs(int node, unordered_map<int, vector<int>> &adj, vector<bool> &visited, vector<bool> &dfsvisited, vector<int> &cyclenodes){
+    bool dfs(int node, unordered_map<int, vector<int>> &adj, vector<bool> &visited, vector<bool> &dfsvisited){
         visited[node] = true;
         dfsvisited[node] = true;
-        cyclenodes.push_back(node);
         for(auto it : adj[node]){
             if(!visited[it]){
-                if(dfs(it, adj, visited, dfsvisited, cyclenodes) == true){
+                if(dfs(it, adj, visited, dfsvisited) == true){
                     return true;
                 }
             }
@@ -14,7 +13,6 @@ public:
                 return true;
             }
         }
-        cyclenodes.pop_back();
         dfsvisited[node] = false;
         return false;
     }
@@ -35,23 +33,28 @@ public:
         
         for(int i=0; i<n; i++){
             if(!visited[i]){
-                bool ans = dfs(i, adj, visited, dfsvisited, cyclenodes);
+                bool ans = dfs(i, adj, visited, dfsvisited);
+            }
+        }
+        for(int j=0; j<n; j++){
+             if(!dfsvisited[j]){
+                cyclenodes.push_back(j);
             }
         }
         
-        unordered_set<int> presentNumbers;
-        vector<int> missingNumbers;
+//         unordered_set<int> presentNumbers;
+//         vector<int> missingNumbers;
 
-        for (int num : cyclenodes) {
-            presentNumbers.insert(num);
-        }
+//         for (int num : cyclenodes) {
+//             presentNumbers.insert(num);
+//         }
 
-        for (int i = 0; i < n; i++) {
-            if (presentNumbers.find(i) == presentNumbers.end()) {
-                missingNumbers.push_back(i);
-            }
-        }
+//         for (int i = 0; i < n; i++) {
+//             if (presentNumbers.find(i) == presentNumbers.end()) {
+//                 missingNumbers.push_back(i);
+//             }
+//         }
 
-        return missingNumbers;
+        return cyclenodes;
     }
 };
