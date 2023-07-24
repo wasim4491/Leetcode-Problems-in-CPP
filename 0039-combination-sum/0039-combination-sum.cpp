@@ -1,34 +1,35 @@
 class Solution {
 public:
-    void combsum(vector<int> candidates, int target, vector<int> &temp, vector<vector<int>> &ans, int &sum, int ind, int n){
-        if(sum == target){
-            ans.push_back(temp);
+    void comb1help(vector<int>& candidates, int target, int ind, int sum, vector<vector<int>> &ans, vector<int> res){
+        if(ind >= candidates.size()){
             return;
         }
-        if(sum > target || ind == n){
-            return ;
+        if(sum > target){
+            return;
+        }
+        if(sum == target){
+            ans.push_back(res);
+            return;
         }
         
-        
-        // pick the elemet and not to move the index
-        temp.push_back(candidates[ind]);
+        //pick element
+        res.push_back(candidates[ind]);
         sum += candidates[ind];
-        combsum(candidates, target, temp, ans, sum, ind, n);
-        temp.pop_back();
+        comb1help(candidates, target, ind, sum, ans, res);
         sum -= candidates[ind];
+        res.pop_back();
         
-        //not pick the element
-        combsum(candidates, target, temp, ans, sum, ind+1, n);
-        
+        //not pick
+        comb1help(candidates, target, ind+1, sum, ans, res);
     }
-    
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> temp;
         vector<vector<int>> ans;
-        int sum = 0;
+        vector<int> res;
         int ind = 0;
-        int n = candidates.size();
-        combsum(candidates, target, temp, ans, sum, ind, n);
+        int sum = 0;
+        
+        comb1help(candidates, target, ind, sum, ans, res);
+        
         return ans;
     }
 };
