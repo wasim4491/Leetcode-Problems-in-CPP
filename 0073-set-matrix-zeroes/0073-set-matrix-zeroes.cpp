@@ -7,11 +7,13 @@ public:
         for(int i=0; i<m; i++){
             if(matrix[i][0] == 0){
                 flag1 = true;
+                break;
             }
         }
         for(int j=0; j<n; j++){
             if(matrix[0][j] == 0){
                 flag2 = true;
+                break;
             }
         }
         for(int i=1; i<m; i++){
