@@ -1,28 +1,39 @@
 class Solution {
 public:
-    bool check(int i, int j, int m, int n){
-        if(i >= m || j >= n){
-            return false;
-        }
-        return true;
-    }
-    int helper(int i, int j, int m, int n, vector<vector<int>> &dp, vector<vector<int>>& grid){
-        if(!check(i, j, m, n) || grid[i][j] == 1){
-            return 0;
-        }
-        if(i == m-1 && j == n-1){
-            return 1;
-        }
-        if(dp[i][j] != -1){
-            return dp[i][j];
-        }
-        return dp[i][j] = helper(i+1, j, m, n, dp, grid) + helper(i, j+1, m, n, dp, grid);
-    }
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
         int i = 0, j = 0;
         int m = obstacleGrid.size();
         int n = obstacleGrid[0].size();
-        vector<vector<int>> dp(m, vector<int> (n, -1));
-        return helper(i, j, m, n, dp, obstacleGrid);
+        vector<vector<long long int>> dp(m, vector<long long int> (n, 0));
+        
+        if(obstacleGrid[0][0] == 1 || obstacleGrid[m-1][n-1] == 1){
+            return 0;
+        }
+        
+        //Intialize destination cell
+        dp[m-1][n-1] = 1;
+         //Intialize last row
+        for(int j=n-2; j>=0; j--){
+            if(obstacleGrid[m-1][j] == 0){
+                dp[m-1][j] = dp[m-1][j+1];
+            }
+        }
+        //Initialize last column
+        for(int i=m-2; i>=0; i--){
+            if(obstacleGrid[i][n-1] == 0){
+                dp[i][n-1] = dp[i+1][n-1];
+            }
+        }
+        
+        //Initialize remaining elements
+        for(int i=m-2; i>=0; i--){
+            for(int j=n-2; j>=0; j--){
+                if(obstacleGrid[i][j] == 0){
+                    dp[i][j] = dp[i+1][j] + dp[i][j+1];
+                }
+            }
+        }
+        
+        return dp[0][0];
     }
 };
