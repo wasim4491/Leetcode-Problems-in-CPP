@@ -1,39 +1,44 @@
 class Solution {
 public:
     int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        int i = 0, j = 0;
         int m = obstacleGrid.size();
         int n = obstacleGrid[0].size();
-        vector<vector<long long int>> dp(m, vector<long long int> (n, 0));
-        
-        if(obstacleGrid[0][0] == 1 || obstacleGrid[m-1][n-1] == 1){
+
+        if (obstacleGrid[m - 1][n - 1] == 1 || obstacleGrid[0][0] == 1) {
             return 0;
         }
-        
-        //Intialize destination cell
-        dp[m-1][n-1] = 1;
-         //Intialize last row
-        for(int j=n-2; j>=0; j--){
-            if(obstacleGrid[m-1][j] == 0){
-                dp[m-1][j] = dp[m-1][j+1];
+
+        obstacleGrid[m - 1][n - 1] = 1; // Initialize the destination cell
+
+        // Fill the last row
+        for (int j = n - 2; j >= 0; j--) {
+            if (obstacleGrid[m - 1][j] == 0) {
+                obstacleGrid[m - 1][j] = obstacleGrid[m - 1][j + 1];
+            } else {
+                obstacleGrid[m - 1][j] = 0; // Set to 0 if there's an obstacle
             }
         }
-        //Initialize last column
-        for(int i=m-2; i>=0; i--){
-            if(obstacleGrid[i][n-1] == 0){
-                dp[i][n-1] = dp[i+1][n-1];
+
+        // Fill the last column
+        for (int i = m - 2; i >= 0; i--) {
+            if (obstacleGrid[i][n - 1] == 0) {
+                obstacleGrid[i][n - 1] = obstacleGrid[i + 1][n - 1];
+            } else {
+                obstacleGrid[i][n - 1] = 0; // Set to 0 if there's an obstacle
             }
         }
-        
-        //Initialize remaining elements
-        for(int i=m-2; i>=0; i--){
-            for(int j=n-2; j>=0; j--){
-                if(obstacleGrid[i][j] == 0){
-                    dp[i][j] = dp[i+1][j] + dp[i][j+1];
+
+        // Fill the rest of the grid bottom-up
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = n - 2; j >= 0; j--) {
+                if (obstacleGrid[i][j] == 0) {
+                    obstacleGrid[i][j] = (long long) obstacleGrid[i + 1][j] + obstacleGrid[i][j + 1];
+                } else {
+                    obstacleGrid[i][j] = 0; // Set to 0 if there's an obstacle
                 }
             }
         }
-        
-        return dp[0][0];
+
+        return obstacleGrid[0][0];
     }
 };
