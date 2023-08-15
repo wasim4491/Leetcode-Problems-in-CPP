@@ -14,12 +14,13 @@ public:
         if(head == NULL){
             return head;
         }
-        ListNode* pivot;
+        ListNode* newtemp = head;
         ListNode* temp = head;
         while(temp != NULL){
             if(temp->val >= x){
                 break;
             }
+            newtemp = temp;
             temp = temp -> next;
         }
         
@@ -38,10 +39,6 @@ public:
                 prev = cur;
                 cur = cur -> next;
             }
-        }
-        ListNode *newtemp = head;
-        while(temp != head && newtemp->next != temp){
-            newtemp = newtemp -> next;
         }
         for(int i=0; i<temparr.size(); i++){
             if(newtemp == head && temp == head){
