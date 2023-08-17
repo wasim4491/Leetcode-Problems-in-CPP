@@ -7,12 +7,13 @@ public:
         int count = 0;
         int maxi = INT_MIN;
         
-        unordered_map<char,int> map;
+        //unordered_map<char,int> map;
+        vector<int> map(128, -1);
         
         int l = 0, r = 0;
         int n = s.length();
         while(l < n && r < n){
-            if(map.find(s[r]) != map.end() && map[s[r]] >= l){
+            if(map[s[r]] != -1 && map[s[r]] >= l){
                 l = map[s[r]] + 1;
             }
             map[s[r]] = r;
