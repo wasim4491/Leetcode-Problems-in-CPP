@@ -7,7 +7,6 @@ public:
         int count = 0;
         int maxi = INT_MIN;
         
-        //unordered_map<char,int> map;
         vector<int> map(128, -1);
         
         int l = 0, r = 0;
