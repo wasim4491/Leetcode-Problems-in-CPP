@@ -1,19 +1,23 @@
 class Solution {
 public:
     
-    int ways(int n){
-        int prev1 = 1;
-        int prev2 = 1;
-        int cur = 1;
-        for(int i=2; i<=n; i++){
-            cur = prev1 + prev2;
-            prev1 = prev2;
-            prev2 = cur;
+    int helper(int n, vector<int> &dp){
+        if(dp[n] != -1){
+            return dp[n];
         }
-        return cur;
+        
+        if(n <= 2){
+            dp[n] = n;
+            return dp[n];
+        }
+        
+        dp[n] = helper(n-1, dp) + helper(n-2, dp);
+        return dp[n];
     }
     
     int climbStairs(int n) {
-        return ways(n);
+        vector<int> dp(n+1, -1);
+        
+        return helper(n, dp);
     }
 };
