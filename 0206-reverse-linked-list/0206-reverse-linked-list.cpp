@@ -10,31 +10,25 @@
  */
 class Solution {
 public:
+    void helper(ListNode* cur, ListNode* prev, ListNode* &head){
+        if(cur == NULL){
+            head = prev;
+            return;
+        }
+        helper(cur->next, cur, head);
+        cur->next = prev;
+        prev->next = NULL;
+    }
+    
+    
     ListNode* reverseList(ListNode* head) {
-        unordered_map<int, ListNode*> map;
-        ListNode* temp = head;
-        int ind = 0;
-        while(temp != NULL){
-            map[ind++] = temp;
-            temp = temp -> next;
+        if(head == NULL || head->next == NULL){
+            return head;
         }
-        ind--;
+        ListNode* cur = head->next;
+        ListNode* prev = head;
         
-        ListNode* newhead = NULL;
-        ListNode* last = NULL;
-        while(ind >= 0){
-            ListNode* temp = new ListNode(map[ind]->val);
-            if(newhead == NULL){
-                newhead = temp;
-                last = newhead;
-            }
-            else{
-                last->next = temp;
-                last = temp;
-            }
-            ind--;
-        }
-        
-        return newhead;
+        helper(cur, prev, head);
+        return head;
     }
 };
